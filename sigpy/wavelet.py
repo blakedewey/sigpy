@@ -7,11 +7,12 @@ from sigpy import backend, config, util
 
 __all__ = ["fwt", "iwt"]
 
+if config.pywt_enabled:
+    import pywt  # noqa
+
 
 def get_wavelet_shape(shape, wave_name="db4", axes=None, level=None):
-    if config.pywt_enabled:
-        import pywt  # noqa
-    else:
+    if not config.pywt_enabled:
         raise ImportError("pywt is not installed. Please install pywt.")
 
     zshape = [((i + 1) // 2) * 2 for i in shape]
@@ -34,9 +35,7 @@ def fwt(input, wave_name="db4", axes=None, level=None):
         wave_name (str): Wavelet name.
         level (None or int): Number of wavelet levels.
     """
-    if config.pywt_enabled:
-        import pywt  # noqa
-    else:
+    if not config.pywt_enabled:
         raise ImportError("pywt is not installed. Please install pywt.")
 
     device = backend.get_device(input)
@@ -65,9 +64,7 @@ def iwt(input, oshape, coeff_slices, wave_name="db4", axes=None, level=None):
         wave_name (str): Wavelet name.
         level (None or int): Number of wavelet levels.
     """
-    if config.pywt_enabled:
-        import pywt  # noqa
-    else:
+    if not config.pywt_enabled:
         raise ImportError("pywt is not installed. Please install pywt.")
 
     device = backend.get_device(input)
