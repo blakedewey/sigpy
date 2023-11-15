@@ -773,7 +773,7 @@ def traj_array_to_complex(k):
     return kout
 
 
-@uti.fallback_jit(nopython=True, cache=True)  # pragma: no cover
+@util.fallback_jit(nopython=True, cache=True)  # pragma: no cover
 def runge_kutta(
     ds: float, st: float, kvals: np.ndarray, smax=None, gamma=4.257
 ):
