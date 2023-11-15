@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """MRI sampling functions.
 """
-import numba as nb
 import numpy as np
+
+from sigpy import util
 
 __all__ = ["poisson", "radial", "spiral"]
 
@@ -167,7 +168,7 @@ def radial(coord_shape, img_shape, golden=True, dtype=float):
     return (coord * img_shape[-ndim:]).astype(dtype)
 
 
-@nb.jit(nopython=True, cache=True)  # pragma: no cover
+@util.fallback_jit(nopython=True, cache=True)  # pragma: no cover
 def _poisson(nx, ny, max_attempts, radius_x, radius_y, calib, seed=None):
     mask = np.zeros((ny, nx))
 

@@ -10,9 +10,7 @@ authors = [
 license = {text = "BSD"}
 dependencies = [
     "numpy",
-    "pywavelets", 
-    "numba", 
-    "scipy", 
+    "scipy",
     "tqdm"
 ]
 classifiers=[
@@ -26,6 +24,10 @@ dynamic = [
 ]
 
 [project.optional-dependencies]
+full = [
+    "numba",
+    "pywavelets",
+]
 test = [
     "pytest < 5.0.0",
     "pytest-cov[all]",

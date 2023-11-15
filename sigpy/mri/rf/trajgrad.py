@@ -4,9 +4,10 @@
 
 import math
 
-import numba as nb
 import numpy as np
 from scipy import integrate, interpolate
+
+from sigpy import util
 
 __all__ = [
     "min_trap_grad",
@@ -772,7 +773,7 @@ def traj_array_to_complex(k):
     return kout
 
 
-@nb.jit(nopython=True, cache=True)  # pragma: no cover
+@uti.fallback_jit(nopython=True, cache=True)  # pragma: no cover
 def runge_kutta(
     ds: float, st: float, kvals: np.ndarray, smax=None, gamma=4.257
 ):

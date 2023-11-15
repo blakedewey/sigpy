@@ -1,3 +1,5 @@
+        **NOTE:**  This is a fork of the repository below. Changes have been made to lighten it's dependency on Numba and PyWavelets. If you are using a function that used Numba either install with the ``[full]`` extra or expect **much** slower results.
+
 SigPy
 =====
 

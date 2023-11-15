@@ -7,6 +7,28 @@ This module contains flags to turn on and off optional modules.
 import warnings
 from importlib import util
 
+numba_enabled = util.find_spec("numba") is not None
+if numba_enabled:
+    try:
+        import numba  # noqa
+    except ImportError as e:
+        warnings.warn(
+            f"Importing numba failed. "
+            f"For more details, see the error stack below:\n{e}"
+        )
+        numba_enabled = False
+
+pywt_enabled = util.find_spec("pywt") is not None
+if pywt_enabled:
+    try:
+        import pywt  # noqa
+    except ImportError as e:
+        warnings.warn(
+            f"Importing pywt failed. "
+            f"For more details, see the error stack below:\n{e}"
+        )
+        pywt_enabled = False
+
 cupy_enabled = util.find_spec("cupy") is not None
 if cupy_enabled:
     try:

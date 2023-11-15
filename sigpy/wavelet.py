@@ -2,11 +2,15 @@
 """Wavelet transform functions.
 """
 import numpy as np
-import pywt
 
-from sigpy import backend, util
+from sigpy import backend, config, util
 
 __all__ = ["fwt", "iwt"]
+
+if config.pywt_enabled:
+    import pywt # noqa
+else:
+    raise ImportError("pywt is not installed. Please install pywt.")
 
 
 def get_wavelet_shape(shape, wave_name="db4", axes=None, level=None):

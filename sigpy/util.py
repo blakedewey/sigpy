@@ -3,7 +3,8 @@
 """
 import numpy as np
 
-from sigpy import backend
+from sigpy import backend, config
+
 
 __all__ = [
     "prod",
@@ -465,3 +466,21 @@ def xpay(y, a, x):
     """
     y *= a
     y += x
+
+
+def fallback_jit(*jit_args, **jit_kwargs):
+    def decorator(func):
+        if config.numba_enabled:
+            import numba as nb # noqa
+            return nb.jit(*jit_args, **jit_kwargs)(func)
+        return func
+    return decorator
+
+
+def fallback_vectorize(*jit_args, **jit_kwargs):
+    def decorator(func):
+        if config.numba_enabled:
+            import numba as nb # noqa
+            return nb.vectorize(*jit_args, **jit_kwargs)(func)
+        return func
+    return decorator

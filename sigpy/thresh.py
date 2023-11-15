@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Thresholding functions.
 """
-import numba as nb
 import numpy as np
 
 from sigpy import backend, config, util
@@ -153,7 +152,7 @@ def psd_proj(input):
     return (v * w) @ v.conjugate().T
 
 
-@nb.vectorize  # pragma: no cover
+@util.fallback_vectorize  # pragma: no cover
 def _soft_thresh(lamda, input):
     abs_input = abs(input)
     if abs_input == 0:
@@ -167,7 +166,7 @@ def _soft_thresh(lamda, input):
     return mag * sign
 
 
-@nb.vectorize  # pragma: no cover
+@util.fallback_vectorize  # pragma: no cover
 def _hard_thresh(lamda, input):
     abs_input = abs(input)
     if abs_input > lamda:

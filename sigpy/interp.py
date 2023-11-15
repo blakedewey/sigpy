@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Interpolation functions.
 """
-import numba as nb
 import numpy as np
 
 from sigpy import backend, config, util
@@ -184,7 +183,7 @@ def gridding(input, coord, shape, kernel="spline", width=2, param=1):
     return output.reshape(shape)
 
 
-@nb.jit(nopython=True, cache=True)  # pragma: no cover
+@util.fallback_jit(nopython=True, cache=True)  # pragma: no cover
 def _spline_kernel(x, order):
     if abs(x) > 1:
         return 0
@@ -200,7 +199,7 @@ def _spline_kernel(x, order):
             return 3 / 4 * (1 - 3 * x**2)
 
 
-@nb.jit(nopython=True, cache=True)  # pragma: no cover
+@util.fallback_jit(nopython=True, cache=True)  # pragma: no cover
 def _kaiser_bessel_kernel(x, beta):
     if abs(x) > 1:
         return 0
@@ -241,7 +240,7 @@ def _get_interpolate(kernel):
     elif kernel == "kaiser_bessel":
         kernel = _kaiser_bessel_kernel
 
-    @nb.jit(nopython=True)  # pragma: no cover
+    @util.fallback_jit(nopython=True)  # pragma: no cover
     def _interpolate1(output, input, coord, width, param):
         batch_size, nx = input.shape
         npts = coord.shape[0]
@@ -260,7 +259,7 @@ def _get_interpolate(kernel):
 
         return output
 
-    @nb.jit(nopython=True)  # pragma: no cover
+    @util.fallback_jit(nopython=True)  # pragma: no cover
     def _interpolate2(output, input, coord, width, param):
         batch_size, ny, nx = input.shape
         npts = coord.shape[0]
@@ -286,7 +285,7 @@ def _get_interpolate(kernel):
 
         return output
 
-    @nb.jit(nopython=True)  # pragma: no cover
+    @util.fallback_jit(nopython=True)  # pragma: no cover
     def _interpolate3(output, input, coord, width, param):
         batch_size, nz, ny, nx = input.shape
         npts = coord.shape[0]
@@ -331,7 +330,7 @@ def _get_gridding(kernel):
     elif kernel == "kaiser_bessel":
         kernel = _kaiser_bessel_kernel
 
-    @nb.jit(nopython=True)  # pragma: no cover
+    @util.fallback_jit(nopython=True)  # pragma: no cover
     def _gridding1(output, input, coord, width, param):
         batch_size, nx = output.shape
         npts = coord.shape[0]
@@ -349,7 +348,7 @@ def _get_gridding(kernel):
 
         return output
 
-    @nb.jit(nopython=True)  # pragma: no cover
+    @util.fallback_jit(nopython=True)  # pragma: no cover
     def _gridding2(output, input, coord, width, param):
         batch_size, ny, nx = output.shape
         npts = coord.shape[0]
@@ -373,7 +372,7 @@ def _get_gridding(kernel):
 
         return output
 
-    @nb.jit(nopython=True)  # pragma: no cover
+    @util.fallback_jit(nopython=True)  # pragma: no cover
     def _gridding3(output, input, coord, width, param):
         batch_size, nz, ny, nx = output.shape
         npts = coord.shape[0]

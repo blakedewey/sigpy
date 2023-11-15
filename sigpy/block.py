@@ -2,7 +2,6 @@
 """Block reshape functions.
 
 """
-import numba as nb
 import numpy as np
 
 from sigpy import backend, config, util
@@ -239,7 +238,7 @@ def blocks_to_array(input, oshape, blk_shape, blk_strides):
     return output.reshape(oshape)
 
 
-@nb.jit(nopython=True, cache=True)  # pragma: no cover
+@util.fallback_jit(nopython=True, cache=True)  # pragma: no cover
 def _array_to_blocks1(output, input, batch_size, Bx, Sx, Nx):
     for b in range(batch_size):
         for nx in range(Nx):
@@ -249,7 +248,7 @@ def _array_to_blocks1(output, input, batch_size, Bx, Sx, Nx):
                     output[b, nx, bx] = input[b, ix]
 
 
-@nb.jit(nopython=True, cache=True)  # pragma: no cover
+@util.fallback_jit(nopython=True, cache=True)  # pragma: no cover
 def _array_to_blocks2(output, input, batch_size, Bx, By, Sx, Sy, Nx, Ny):
     for b in range(batch_size):
         for ny in range(Ny):
@@ -262,7 +261,7 @@ def _array_to_blocks2(output, input, batch_size, Bx, By, Sx, Sy, Nx, Ny):
                             output[b, ny, nx, by, bx] = input[b, iy, ix]
 
 
-@nb.jit(nopython=True, cache=True)  # pragma: no cover
+@util.fallback_jit(nopython=True, cache=True)  # pragma: no cover
 def _array_to_blocks3(
     output, input, batch_size, Bx, By, Bz, Sx, Sy, Sz, Nx, Ny, Nz
 ):
@@ -286,7 +285,7 @@ def _array_to_blocks3(
                                     ]
 
 
-@nb.jit(nopython=True, cache=True)  # pragma: no cover
+@util.fallback_jit(nopython=True, cache=True)  # pragma: no cover
 def _blocks_to_array1(output, input, batch_size, Bx, Sx, Nx):
     for b in range(batch_size):
         for ix in range(output.shape[-1]):
@@ -297,7 +296,7 @@ def _blocks_to_array1(output, input, batch_size, Bx, Sx, Nx):
                     output[b, ix] += input[b, nx, bx]
 
 
-@nb.jit(nopython=True, cache=True)  # pragma: no cover
+@util.fallback_jit(nopython=True, cache=True)  # pragma: no cover
 def _blocks_to_array2(output, input, batch_size, Bx, By, Sx, Sy, Nx, Ny):
     for b in range(batch_size):
         for iy in range(output.shape[-2]):
@@ -313,7 +312,7 @@ def _blocks_to_array2(output, input, batch_size, Bx, By, Sx, Sy, Nx, Ny):
                                 output[b, iy, ix] += input[b, ny, nx, by, bx]
 
 
-@nb.jit(nopython=True, cache=True)  # pragma: no cover
+@util.fallback_jit(nopython=True, cache=True)  # pragma: no cover
 def _blocks_to_array3(
     output, input, batch_size, Bx, By, Bz, Sx, Sy, Sz, Nx, Ny, Nz
 ):
