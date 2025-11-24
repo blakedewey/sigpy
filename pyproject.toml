@@ -2,10 +2,11 @@
 requires = ["setuptools", "setuptools-scm"]
 
 [project]
-name = "sigpy"
-description = "Python package for signal reconstruction." 
+name = "sigpy-lite"
+description = "A light fork of sigpy, a signal processing library for Python."
 authors = [
     {name = "Frank Ong", email = "frankong@berkeley.edu"},
+    {name = "Blake Dewey", email = "blake.dewey@jhu.edu"},
 ]    
 license = {text = "BSD"}
 dependencies = [
@@ -43,9 +44,9 @@ lint = [
 
 
 [project.urls]
-homepage = "https://github.com/mikgroup/sigpy"
+homepage = "https://github.com/blakedewey/sigpy"
 documentation = "https://sigpy.readthedocs.io/en/latest/"
-repository = "https://github.com/mikgroup/sigpy"
+repository = "https://github.com/blakedewey/sigpy"
 
 
 [tool.black]
